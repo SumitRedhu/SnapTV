@@ -1,0 +1,6 @@
+{
+  "name": "CastStream TV — Android TV Web Media Hub",
+  "description": "Transform websites and web video streams into a native 10-foot Android TV leanback experience with D-pad navigation, stream extraction, and phone pairing.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

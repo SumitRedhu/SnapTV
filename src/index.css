@@ -1,0 +1,79 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --font-display: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #0b0e14;
+    color: #f1f5f9;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+  }
+}
+
+/* Android TV Overscan / 10-foot Safe Zone */
+.tv-safe-zone {
+  padding-left: clamp(1.5rem, 4vw, 3.5rem);
+  padding-right: clamp(1.5rem, 4vw, 3.5rem);
+}
+
+/* Hide scrollbars for cinematic TV leanback browsing */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* TV Focus Glow Animation & Elevation - Budget TV GPU Optimized (Zero Blur Rasterization) */
+.tv-card-focus {
+  transform: translateZ(0);
+  will-change: transform;
+  transition: transform 0.12s ease-out, border-color 0.12s ease-out;
+}
+
+.tv-card-focus:focus-visible,
+.tv-card-focus.is-focused {
+  transform: scale3d(1.03, 1.03, 1) translateZ(0);
+  outline: none;
+  border-color: #6366f1 !important;
+  box-shadow: 0 0 0 2.5px #6366f1;
+  z-index: 20;
+}
+
+/* TV Button Focus State */
+.tv-btn-focus {
+  transform: translateZ(0);
+  will-change: transform;
+  transition: transform 0.12s ease-out, background-color 0.12s ease-out;
+}
+
+.tv-btn-focus:focus-visible,
+.tv-btn-focus.is-focused {
+  outline: none;
+  transform: scale(1.03) translateZ(0);
+  box-shadow: 0 0 0 2px #6366f1;
+}
+
+/* Performance containment for budget TV chips (prevents off-screen reflow stalls) */
+.tv-perf-contain {
+  content-visibility: auto;
+  contain: layout style paint;
+  contain-intrinsic-size: 190px;
+}
+
+/* Slim TV Sidebar Transition */
+.tv-sidebar-transition {
+  transition: width 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
