@@ -4,11 +4,162 @@
     android:layout_height="match_parent"
     android:background="@color/bg_dark">
 
+    <!-- Primary TV & Mobile Browser View -->
     <WebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusable="true"
         android:focusableInTouchMode="true" />
+
+    <!-- Loading Indicator -->
+    <ProgressBar
+        android:id="@+id/loadingIndicator"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/primary_indigo"
+        android:visibility="gone" />
+
+    <!-- TV-Friendly Server Connection & Setup Overlay -->
+    <ScrollView
+        android:id="@+id/errorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#0A0E17"
+        android:fillViewport="true"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="32dp">
+
+            <!-- App Badge -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#1E1B4B"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="6dp"
+                android:text="SnapTV · Server Setup"
+                android:textColor="#818CF8"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvErrorTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Server Not Reached"
+                android:textColor="#F87171"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvErrorDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:maxWidth="650dp"
+                android:text="The streaming server at this URL returned an error (HTTP 404 / Connection Failed). Please specify your server address below."
+                android:textColor="#94A3B8"
+                android:textSize="14sp" />
+
+            <!-- Server URL Input Card -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:maxWidth="650dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Server Web / API URL:"
+                    android:textColor="#CBD5E1"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/etServerUrl"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="8dp"
+                    android:background="#1E293B"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:hint="http://192.168.1.xxx:3000 or your custom domain"
+                    android:imeOptions="actionDone"
+                    android:inputType="textUri"
+                    android:paddingHorizontal="16dp"
+                    android:singleLine="true"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#64748B"
+                    android:textSize="15sp" />
+
+                <!-- Action Buttons -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnConnect"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="#4F46E5"
+                        android:focusable="true"
+                        android:text="Connect &amp; Save"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/btnRetry"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="12dp"
+                        android:backgroundTint="#334155"
+                        android:focusable="true"
+                        android:text="Retry"
+                        android:textAllCaps="false"
+                        android:textColor="#E2E8F0" />
+
+                    <Button
+                        android:id="@+id/btnLocalUi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="12dp"
+                        android:backgroundTint="#0F172A"
+                        android:focusable="true"
+                        android:text="Offline UI"
+                        android:textAllCaps="false"
+                        android:textColor="#94A3B8" />
+                </LinearLayout>
+
+                <!-- Help & Guidance -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="#0F172A"
+                    android:padding="14dp"
+                    android:text="💡 Setup Options:\n1. Same Wi-Fi (PC / Mac): Run 'npm start' on your computer and enter http://192.168.x.x:3000 here.\n2. Cloud Hosted: Enter your Render, Railway, or VPS server URL.\n3. Offline UI: Click 'Offline UI' to run the bundled player directly from your TV's storage.\n\nTip: Press the MENU key or long-press BACK anytime to reopen this setup."
+                    android:textColor="#64748B"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>

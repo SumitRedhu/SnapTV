@@ -1,0 +1,27 @@
+{
+  "id": "/",
+  "name": "SnapTV — Android TV & Mobile Media Hub",
+  "short_name": "SnapTV",
+  "description": "Transform websites and web video streams into a native 10-foot Android TV leanback experience with D-pad remote navigation and stream extraction.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#0b0e14",
+  "theme_color": "#0b0e14",
+  "categories": ["entertainment", "video", "utilities"],
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

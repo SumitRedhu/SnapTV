@@ -232,14 +232,24 @@ export const IPTVGuideView: React.FC<IPTVGuideViewProps> = ({ onPlayChannel }) =
     try {
       const url = `/api/iptv/channels?region=${encodeURIComponent(region)}&genre=${encodeURIComponent(genre)}&verifiedOnly=${isVerified}`;
       const res = await fetch(url);
-      const data = await res.json();
-      if (data.success && data.channels) {
-        setChannels(data.channels);
-      } else {
-        setError(data.error || 'Failed to load IPTV channels');
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success && data.channels) {
+          setChannels(data.channels);
+          return;
+        }
       }
-    } catch (err: any) {
-      setError(err.message || 'Network error fetching channels');
+      throw new Error('API server offline');
+    } catch {
+      // Graceful Serverless Fallback: Use verified direct streams when running standalone
+      let filtered = VERIFIED_QUICK_CHANNELS;
+      if (region !== 'all-selected' && region !== 'all') {
+        filtered = filtered.filter((c) => c.region === region);
+      }
+      if (genre !== 'all') {
+        filtered = filtered.filter((c) => c.group.toLowerCase() === genre.toLowerCase());
+      }
+      setChannels(filtered.length > 0 ? filtered : VERIFIED_QUICK_CHANNELS);
     } finally {
       setIsLoading(false);
     }

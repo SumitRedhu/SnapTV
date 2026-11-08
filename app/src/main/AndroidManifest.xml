@@ -31,7 +31,7 @@
             android:name=".MainActivity"
             android:exported="true"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|keyboard"
-            android:screenOrientation="userLandscape"
+            android:screenOrientation="unspecified"
             android:windowSoftInputMode="adjustResize">
 
             <!-- Mobile & Tablet launcher intent -->

@@ -5,6 +5,13 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { StreamItem, HDHubMovie, TVTab, RecentWatchItem, ContentProviderId } from './types/tv';
+import {
+  DEFAULT_FEATURED_MOVIES,
+  DEFAULT_BOLLYWOOD_MOVIES,
+  DEFAULT_SOUTH_MOVIES,
+  DEFAULT_HOLLYWOOD_MOVIES,
+  DEFAULT_SERIES_MOVIES,
+} from './data/defaultCatalog';
 import { TVSidebar } from './components/TVSidebar';
 import { HDHubMovieCard } from './components/HDHubMovieCard';
 import { HDHubMovieDetailModal } from './components/HDHubMovieDetailModal';
@@ -58,11 +65,11 @@ export default function App() {
   const [hdhubDomain, setHdhubDomain] = useState<string>('https://new11.hdhub4u.cl');
 
   // Movies State
-  const [featuredMovies, setFeaturedMovies] = useState<HDHubMovie[]>([]);
-  const [bollywoodMovies, setBollywoodMovies] = useState<HDHubMovie[]>([]);
-  const [hollywoodMovies, setHollywoodMovies] = useState<HDHubMovie[]>([]);
-  const [webSeriesMovies, setWebSeriesMovies] = useState<HDHubMovie[]>([]);
-  const [southMovies, setSouthMovies] = useState<HDHubMovie[]>([]);
+  const [featuredMovies, setFeaturedMovies] = useState<HDHubMovie[]>(DEFAULT_FEATURED_MOVIES);
+  const [bollywoodMovies, setBollywoodMovies] = useState<HDHubMovie[]>(DEFAULT_BOLLYWOOD_MOVIES);
+  const [hollywoodMovies, setHollywoodMovies] = useState<HDHubMovie[]>(DEFAULT_HOLLYWOOD_MOVIES);
+  const [webSeriesMovies, setWebSeriesMovies] = useState<HDHubMovie[]>(DEFAULT_SERIES_MOVIES);
+  const [southMovies, setSouthMovies] = useState<HDHubMovie[]>(DEFAULT_SOUTH_MOVIES);
 
   // Series Pagination & Filter State
   const [seriesPage, setSeriesPage] = useState<number>(1);
@@ -249,24 +256,25 @@ export default function App() {
           fetch(`/api/hdhub/catalog?category=south&domain=${encodeURIComponent(domainToUse)}`).then(r => r.json()),
         ]);
 
-        if (resLatest.status === 'fulfilled' && resLatest.value?.movies) {
+        if (resLatest.status === 'fulfilled' && resLatest.value?.movies?.length > 0) {
           setFeaturedMovies(resLatest.value.movies);
         }
-        if (resBollywood.status === 'fulfilled' && resBollywood.value?.movies) {
+        if (resBollywood.status === 'fulfilled' && resBollywood.value?.movies?.length > 0) {
           setBollywoodMovies(resBollywood.value.movies);
         }
-        if (resHollywood.status === 'fulfilled' && resHollywood.value?.movies) {
+        if (resHollywood.status === 'fulfilled' && resHollywood.value?.movies?.length > 0) {
           setHollywoodMovies(resHollywood.value.movies);
         }
-        if (resSeries.status === 'fulfilled' && resSeries.value?.movies) {
+        if (resSeries.status === 'fulfilled' && resSeries.value?.movies?.length > 0) {
           setWebSeriesMovies(resSeries.value.movies);
         }
-        if (resSouth.status === 'fulfilled' && resSouth.value?.movies) {
+        if (resSouth.status === 'fulfilled' && resSouth.value?.movies?.length > 0) {
           setSouthMovies(resSouth.value.movies);
         }
       }
-    } catch (err: any) {
-      setCatalogError(err.message || 'Unable to connect to content provider');
+    } catch {
+      // Running standalone / serverless mode: retain rich curated catalogs without showing errors
+      setCatalogError(null);
     } finally {
       setIsLoadingCatalog(false);
       setSeriesPage(1);
